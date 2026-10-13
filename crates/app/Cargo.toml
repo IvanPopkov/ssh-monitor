@@ -1,0 +1,27 @@
+[package]
+name = "ssh-monitor"
+description = "btop-style terminal monitor for one SSH ControlMaster connection"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "ssh-monitor"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.104"
+ratatui = "0.30.2"
+serde_json = "1.0.154"
+ssh-monitor-core = { path = "../core" }
+time = { version = "0.3.55", features = ["local-offset"] }
+tokio = { version = "1.53.2", features = ["rt-multi-thread", "macros", "process", "time", "sync", "io-util"] }
+
+[dev-dependencies]
+ssh-monitor-testkit = { path = "../testkit" }
+tokio = { version = "1.53.2", features = ["test-util"] }

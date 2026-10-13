@@ -1,0 +1,19 @@
+[workspace]
+resolver = "3"
+members = ["crates/core", "crates/app", "crates/testkit"]
+
+[workspace.package]
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.92"
+license = "MIT"
+publish = false
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+# Only crates/core/clippy.toml defines bans.
+disallowed_methods = "deny"
+disallowed_types = "deny"
+disallowed_macros = "deny"

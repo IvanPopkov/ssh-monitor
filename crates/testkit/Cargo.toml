@@ -1,0 +1,19 @@
+[package]
+name = "ssh-monitor-testkit"
+description = "Dev-only: Scenario builder, FakeRunner, fake-cmd shim"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "fake-cmd"
+path = "src/bin/fake-cmd.rs"
+
+[dependencies]
+serde_json = "1.0.154"
+ssh-monitor-core = { path = "../core" }
