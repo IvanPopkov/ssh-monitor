@@ -1,0 +1,399 @@
+2026-10-09 15:11:00  master ended after 1988s (rc=255) — healthy run, backoff reset
+2026-10-09 15:11:00  reconnecting in 4s
+2026-10-09 15:11:04  opening master connection
+2026-10-09 16:46:40  master ended after 5736s (rc=255) — healthy run, backoff reset
+2026-10-09 16:46:40  reconnecting in 1s
+2026-10-09 16:46:41  opening master connection
+2026-10-09 16:47:56  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 16:47:56  reconnecting in 2s
+2026-10-09 16:47:58  opening master connection
+2026-10-09 16:49:13  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 16:49:14  reconnecting in 4s
+2026-10-09 16:49:18  opening master connection
+2026-10-09 16:50:33  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 16:50:33  reconnecting in 3s
+2026-10-09 16:50:36  opening master connection
+2026-10-09 16:51:51  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 16:51:51  reconnecting in 2s
+2026-10-09 16:51:53  opening master connection
+2026-10-09 16:53:08  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 16:53:08  reconnecting in 4s
+2026-10-09 16:53:13  opening master connection
+2026-10-09 16:54:28  master ended after 76s (rc=255) — healthy run, backoff reset
+2026-10-09 16:54:28  reconnecting in 1s
+2026-10-09 16:54:29  opening master connection
+2026-10-09 16:55:44  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 16:55:44  reconnecting in 4s
+2026-10-09 16:55:48  opening master connection
+2026-10-09 16:57:03  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 16:57:03  reconnecting in 3s
+2026-10-09 16:57:07  opening master connection
+2026-10-09 16:58:22  master ended after 76s (rc=255) — healthy run, backoff reset
+2026-10-09 16:58:22  reconnecting in 2s
+2026-10-09 16:58:24  opening master connection
+2026-10-09 16:59:39  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 16:59:39  reconnecting in 2s
+2026-10-09 16:59:41  opening master connection
+2026-10-09 17:00:56  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:00:56  reconnecting in 1s
+2026-10-09 17:00:57  opening master connection
+2026-10-09 17:02:12  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:02:13  reconnecting in 2s
+2026-10-09 17:02:15  opening master connection
+2026-10-09 17:03:30  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:03:30  reconnecting in 4s
+2026-10-09 17:03:34  opening master connection
+2026-10-09 17:04:49  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:04:49  reconnecting in 3s
+2026-10-09 17:04:52  opening master connection
+2026-10-09 17:06:07  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:06:07  reconnecting in 4s
+2026-10-09 17:06:12  opening master connection
+2026-10-09 17:07:27  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:07:27  reconnecting in 1s
+2026-10-09 17:07:28  opening master connection
+2026-10-09 17:08:43  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:08:43  reconnecting in 4s
+2026-10-09 17:08:47  opening master connection
+2026-10-09 17:10:02  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:10:02  reconnecting in 1s
+2026-10-09 17:10:03  opening master connection
+2026-10-09 17:11:19  master ended after 76s (rc=255) — healthy run, backoff reset
+2026-10-09 17:11:19  reconnecting in 3s
+2026-10-09 17:11:22  opening master connection
+2026-10-09 17:12:37  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:12:37  reconnecting in 4s
+2026-10-09 17:12:41  opening master connection
+2026-10-09 17:13:56  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:13:56  reconnecting in 1s
+2026-10-09 17:13:57  opening master connection
+2026-10-09 17:15:12  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:15:12  reconnecting in 4s
+2026-10-09 17:15:17  opening master connection
+2026-10-09 17:16:32  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:16:32  reconnecting in 4s
+2026-10-09 17:16:36  opening master connection
+2026-10-09 17:17:51  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:17:51  reconnecting in 3s
+2026-10-09 17:17:54  opening master connection
+2026-10-09 17:19:09  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:19:09  reconnecting in 4s
+2026-10-09 17:19:13  opening master connection
+2026-10-09 17:20:28  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:20:28  reconnecting in 1s
+2026-10-09 17:20:30  opening master connection
+2026-10-09 17:21:45  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:21:45  reconnecting in 1s
+2026-10-09 17:21:46  opening master connection
+2026-10-09 17:23:01  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:23:01  reconnecting in 2s
+2026-10-09 17:23:03  opening master connection
+2026-10-09 17:24:18  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:24:18  reconnecting in 4s
+2026-10-09 17:24:22  opening master connection
+2026-10-09 17:25:38  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:25:38  reconnecting in 4s
+2026-10-09 17:25:42  opening master connection
+2026-10-09 17:26:57  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:26:57  reconnecting in 1s
+2026-10-09 17:26:58  opening master connection
+2026-10-09 17:28:13  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:28:13  reconnecting in 2s
+2026-10-09 17:28:15  opening master connection
+2026-10-09 17:29:30  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:29:30  reconnecting in 4s
+2026-10-09 17:29:34  opening master connection
+2026-10-09 17:30:49  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:30:49  reconnecting in 3s
+2026-10-09 17:30:53  opening master connection
+2026-10-09 17:32:08  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:32:08  reconnecting in 2s
+2026-10-09 17:32:10  opening master connection
+2026-10-09 17:33:25  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:33:25  reconnecting in 1s
+2026-10-09 17:33:26  opening master connection
+2026-10-09 17:34:41  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:34:41  reconnecting in 1s
+2026-10-09 17:34:42  opening master connection
+2026-10-09 17:35:57  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:35:57  reconnecting in 2s
+2026-10-09 17:36:00  opening master connection
+2026-10-09 17:37:15  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:37:15  reconnecting in 1s
+2026-10-09 17:37:16  opening master connection
+2026-10-09 17:38:31  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:38:31  reconnecting in 1s
+2026-10-09 17:38:32  opening master connection
+2026-10-09 17:39:47  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:39:47  reconnecting in 4s
+2026-10-09 17:39:51  opening master connection
+2026-10-09 17:41:07  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:41:07  reconnecting in 2s
+2026-10-09 17:41:09  opening master connection
+2026-10-09 17:42:24  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:42:24  reconnecting in 3s
+2026-10-09 17:42:27  opening master connection
+2026-10-09 17:43:42  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:43:42  reconnecting in 1s
+2026-10-09 17:43:43  opening master connection
+2026-10-09 17:44:58  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:44:58  reconnecting in 1s
+2026-10-09 17:45:00  opening master connection
+2026-10-09 17:46:15  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:46:15  reconnecting in 2s
+2026-10-09 17:46:17  opening master connection
+2026-10-09 17:47:32  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:47:32  reconnecting in 2s
+2026-10-09 17:47:34  opening master connection
+2026-10-09 17:48:49  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:48:49  reconnecting in 3s
+2026-10-09 17:48:52  opening master connection
+2026-10-09 17:50:07  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:50:07  reconnecting in 2s
+2026-10-09 17:50:10  opening master connection
+2026-10-09 17:51:25  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:51:25  reconnecting in 3s
+2026-10-09 17:51:28  opening master connection
+2026-10-09 17:52:43  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:52:43  reconnecting in 4s
+2026-10-09 17:52:47  opening master connection
+2026-10-09 17:54:02  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:54:02  reconnecting in 3s
+2026-10-09 17:54:05  opening master connection
+2026-10-09 17:55:20  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:55:21  reconnecting in 1s
+2026-10-09 17:55:22  opening master connection
+2026-10-09 17:56:37  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:56:37  reconnecting in 2s
+2026-10-09 17:56:39  opening master connection
+2026-10-09 17:57:54  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:57:54  reconnecting in 3s
+2026-10-09 17:57:57  opening master connection
+2026-10-09 17:59:13  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 17:59:13  reconnecting in 4s
+2026-10-09 17:59:17  opening master connection
+2026-10-09 18:00:32  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:00:32  reconnecting in 1s
+2026-10-09 18:00:33  opening master connection
+2026-10-09 18:01:48  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:01:48  reconnecting in 3s
+2026-10-09 18:01:51  opening master connection
+2026-10-09 18:03:06  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:03:06  reconnecting in 3s
+2026-10-09 18:03:10  opening master connection
+2026-10-09 18:04:25  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:04:25  reconnecting in 4s
+2026-10-09 18:04:29  opening master connection
+2026-10-09 18:05:44  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:05:44  reconnecting in 3s
+2026-10-09 18:05:47  opening master connection
+2026-10-09 18:07:02  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:07:02  reconnecting in 2s
+2026-10-09 18:07:04  opening master connection
+2026-10-09 18:08:19  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:08:19  reconnecting in 3s
+2026-10-09 18:08:23  opening master connection
+2026-10-09 18:09:38  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:09:38  reconnecting in 1s
+2026-10-09 18:09:39  opening master connection
+2026-10-09 18:10:54  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:10:54  reconnecting in 1s
+2026-10-09 18:10:55  opening master connection
+2026-10-09 18:12:10  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:12:10  reconnecting in 3s
+2026-10-09 18:12:13  opening master connection
+2026-10-09 18:13:28  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:13:28  reconnecting in 2s
+2026-10-09 18:13:31  opening master connection
+2026-10-09 18:14:46  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:14:46  reconnecting in 3s
+2026-10-09 18:14:49  opening master connection
+2026-10-09 18:16:04  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:16:04  reconnecting in 3s
+2026-10-09 18:16:07  opening master connection
+2026-10-09 18:17:22  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:17:22  reconnecting in 2s
+2026-10-09 18:17:24  opening master connection
+2026-10-09 18:18:39  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:18:40  reconnecting in 3s
+2026-10-09 18:18:43  opening master connection
+2026-10-09 18:19:58  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:19:58  reconnecting in 3s
+2026-10-09 18:20:01  opening master connection
+2026-10-09 18:21:16  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:21:16  reconnecting in 3s
+2026-10-09 18:21:19  opening master connection
+2026-10-09 18:22:35  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-09 18:22:35  reconnecting in 1s
+2026-10-09 18:22:36  opening master connection
+2026-10-09 18:32:33  master ended after 597s (rc=255) — healthy run, backoff reset
+2026-10-09 18:32:33  reconnecting in 3s
+2026-10-09 18:50:05  opening master connection
+2026-10-09 19:22:35  master ended after 1950s (rc=255) — healthy run, backoff reset
+2026-10-09 19:22:35  reconnecting in 1s
+2026-10-09 19:22:37  opening master connection
+2026-10-09 19:54:44  master ended after 1927s (rc=255) — healthy run, backoff reset
+2026-10-09 19:54:44  reconnecting in 1s
+2026-10-09 19:54:46  opening master connection
+2026-10-09 20:23:32  master ended after 1727s (rc=255) — healthy run, backoff reset
+2026-10-09 20:23:32  reconnecting in 1s
+2026-10-09 20:23:33  opening master connection
+2026-10-09 20:56:31  master ended after 1978s (rc=255) — healthy run, backoff reset
+2026-10-09 20:56:31  reconnecting in 2s
+2026-10-09 20:56:33  opening master connection
+2026-10-09 21:24:30  master ended after 1676s (rc=255) — healthy run, backoff reset
+2026-10-09 21:24:30  reconnecting in 4s
+2026-10-09 21:24:34  opening master connection
+2026-10-09 21:56:23  master ended after 1909s (rc=255) — healthy run, backoff reset
+2026-10-09 21:56:23  reconnecting in 3s
+2026-10-09 22:12:33  opening master connection
+2026-10-09 22:25:30  master ended after 777s (rc=255) — healthy run, backoff reset
+2026-10-09 22:25:30  reconnecting in 1s
+2026-10-09 22:25:32  opening master connection
+2026-10-09 22:41:48  master ended after 976s (rc=255) — healthy run, backoff reset
+2026-10-09 22:41:48  reconnecting in 1s
+2026-10-09 22:41:50  opening master connection
+2026-10-09 23:15:03  master ended after 1994s (rc=255) — healthy run, backoff reset
+2026-10-09 23:15:03  reconnecting in 3s
+2026-10-09 23:15:06  opening master connection
+2026-10-09 23:42:04  master ended after 1618s (rc=255) — healthy run, backoff reset
+2026-10-09 23:42:04  reconnecting in 4s
+2026-10-09 23:57:38  opening master connection
+2026-10-10 00:27:31  master ended after 1793s (rc=255) — healthy run, backoff reset
+2026-10-10 00:27:32  reconnecting in 3s
+2026-10-10 00:27:35  opening master connection
+2026-10-10 00:58:39  master ended after 1864s (rc=255) — healthy run, backoff reset
+2026-10-10 00:58:39  reconnecting in 4s
+2026-10-10 01:15:19  opening master connection
+2026-10-10 01:43:42  master ended after 1703s (rc=255) — healthy run, backoff reset
+2026-10-10 01:43:42  reconnecting in 4s
+2026-10-10 01:43:46  opening master connection
+2026-10-10 02:27:08  master ended after 2602s (rc=255) — healthy run, backoff reset
+2026-10-10 02:27:08  reconnecting in 4s
+2026-10-10 02:29:32  opening master connection
+2026-10-10 02:44:57  master ended after 926s (rc=255) — healthy run, backoff reset
+2026-10-10 02:44:57  reconnecting in 3s
+2026-10-10 02:45:00  opening master connection
+2026-10-10 03:16:41  master ended after 1901s (rc=255) — healthy run, backoff reset
+2026-10-10 03:16:41  reconnecting in 4s
+2026-10-10 03:30:30  opening master connection
+2026-10-10 03:46:13  master ended after 943s (rc=255) — healthy run, backoff reset
+2026-10-10 03:46:13  reconnecting in 4s
+2026-10-10 03:46:17  opening master connection
+2026-10-10 04:20:03  master ended after 2026s (rc=255) — healthy run, backoff reset
+2026-10-10 04:20:03  reconnecting in 3s
+2026-10-10 04:20:07  opening master connection
+2026-10-10 04:47:41  master ended after 1654s (rc=255) — healthy run, backoff reset
+2026-10-10 04:47:41  reconnecting in 2s
+2026-10-10 04:47:44  opening master connection
+2026-10-10 05:19:36  master ended after 1913s (rc=255) — healthy run, backoff reset
+2026-10-10 05:19:36  reconnecting in 2s
+2026-10-10 05:19:39  opening master connection
+2026-10-10 05:52:37  master ended after 1978s (rc=255) — healthy run, backoff reset
+2026-10-10 05:52:37  reconnecting in 4s
+2026-10-10 06:10:29  opening master connection
+2026-10-10 06:42:34  master ended after 1925s (rc=255) — healthy run, backoff reset
+2026-10-10 06:42:34  reconnecting in 4s
+2026-10-10 06:57:43  opening master connection
+2026-10-10 07:31:49  master ended after 2046s (rc=255) — healthy run, backoff reset
+2026-10-10 07:31:49  reconnecting in 2s
+2026-10-10 07:48:31  opening master connection
+2026-10-10 08:22:02  master ended after 2011s (rc=255) — healthy run, backoff reset
+2026-10-10 08:22:02  reconnecting in 2s
+2026-10-10 08:22:05  opening master connection
+2026-10-10 08:54:11  master ended after 1926s (rc=255) — healthy run, backoff reset
+2026-10-10 08:54:11  reconnecting in 2s
+2026-10-10 08:54:13  opening master connection
+2026-10-10 09:26:12  master ended after 1919s (rc=255) — healthy run, backoff reset
+2026-10-10 09:26:13  reconnecting in 3s
+2026-10-10 09:26:16  opening master connection
+2026-10-10 09:59:22  master ended after 1985s (rc=255) — healthy run, backoff reset
+2026-10-10 09:59:22  reconnecting in 2s
+2026-10-10 09:59:24  opening master connection
+2026-10-10 10:22:47  master ended after 1403s (rc=255) — healthy run, backoff reset
+2026-10-10 10:22:47  reconnecting in 3s
+2026-10-10 10:22:50  opening master connection
+2026-10-10 10:55:42  master ended after 1972s (rc=255) — healthy run, backoff reset
+2026-10-10 10:55:42  reconnecting in 3s
+2026-10-10 11:11:52  opening master connection
+2026-10-10 11:57:05  master ended after 2714s (rc=255) — healthy run, backoff reset
+2026-10-10 11:57:05  reconnecting in 3s
+2026-10-10 12:12:11  opening master connection
+2026-10-10 12:59:46  master ended after 2855s (rc=255) — healthy run, backoff reset
+2026-10-10 12:59:46  reconnecting in 1s
+2026-10-10 12:59:47  opening master connection
+2026-10-10 13:41:26  master ended after 2499s (rc=255) — healthy run, backoff reset
+2026-10-10 13:41:26  reconnecting in 2s
+2026-10-10 13:59:00  opening master connection
+2026-10-10 14:15:52  master ended after 1012s (rc=255) — healthy run, backoff reset
+2026-10-10 14:15:52  reconnecting in 4s
+2026-10-10 14:26:46  opening master connection
+2026-10-10 14:42:04  master ended after 919s (rc=255) — healthy run, backoff reset
+2026-10-10 14:42:04  reconnecting in 2s
+2026-10-10 14:57:25  opening master connection
+2026-10-10 15:14:40  master ended after 1035s (rc=255) — healthy run, backoff reset
+2026-10-10 15:14:40  reconnecting in 2s
+2026-10-10 15:14:43  opening master connection
+2026-10-10 15:44:59  master ended after 1817s (rc=255) — healthy run, backoff reset
+2026-10-10 15:45:00  reconnecting in 3s
+2026-10-10 15:45:03  opening master connection
+2026-10-10 16:19:27  master ended after 2064s (rc=255) — healthy run, backoff reset
+2026-10-10 16:19:27  reconnecting in 3s
+2026-10-10 16:19:31  opening master connection
+2026-10-10 16:46:53  master ended after 1642s (rc=255) — healthy run, backoff reset
+2026-10-10 16:46:53  reconnecting in 3s
+2026-10-10 17:04:50  opening master connection
+2026-10-10 17:20:08  master ended after 918s (rc=255) — healthy run, backoff reset
+2026-10-10 17:20:08  reconnecting in 4s
+2026-10-10 17:29:46  opening master connection
+2026-10-10 17:47:08  master ended after 1042s (rc=255) — healthy run, backoff reset
+2026-10-10 17:47:08  reconnecting in 2s
+2026-10-10 18:04:52  opening master connection
+2026-10-10 18:19:07  master ended after 855s (rc=255) — healthy run, backoff reset
+2026-10-10 18:19:07  reconnecting in 2s
+2026-10-10 18:19:10  opening master connection
+2026-10-10 18:46:08  master ended after 1618s (rc=255) — healthy run, backoff reset
+2026-10-10 18:46:08  reconnecting in 4s
+2026-10-10 18:46:12  opening master connection
+2026-10-10 19:18:23  master ended after 1931s (rc=255) — healthy run, backoff reset
+2026-10-10 19:18:23  reconnecting in 2s
+2026-10-10 19:18:25  opening master connection
+2026-10-10 21:21:57  master ended after 7412s (rc=255) — healthy run, backoff reset
+2026-10-10 21:21:57  reconnecting in 2s
+2026-10-10 21:22:00  opening master connection
+2026-10-10 22:05:44  master ended after 2624s (rc=255) — healthy run, backoff reset
+2026-10-10 22:05:44  reconnecting in 2s
+2026-10-10 22:05:46  opening master connection
+2026-10-10 22:07:01  master ended after 75s (rc=255) — healthy run, backoff reset
+2026-10-10 22:07:01  reconnecting in 3s
+2026-10-10 22:07:04  opening master connection
+2026-10-10 23:23:04  master ended after 4560s (rc=255) — healthy run, backoff reset
+2026-10-10 23:23:04  reconnecting in 1s
+2026-10-10 23:23:05  opening master connection
+2026-10-10 23:57:18  master ended after 2053s (rc=255) — healthy run, backoff reset
+2026-10-10 23:57:18  reconnecting in 3s
+2026-10-11 00:08:38  opening master connection
+2026-10-11 00:24:06  master ended after 928s (rc=255) — healthy run, backoff reset
+2026-10-11 00:24:06  reconnecting in 2s
+2026-10-11 00:24:09  opening master connection
+2026-10-11 00:56:27  master ended after 1938s (rc=255) — healthy run, backoff reset
+2026-10-11 00:56:27  reconnecting in 2s
+2026-10-11 01:09:39  opening master connection
+2026-10-11 01:25:03  master ended after 924s (rc=255) — healthy run, backoff reset
+2026-10-11 01:25:03  reconnecting in 2s
+2026-10-11 01:25:06  opening master connection
+2026-10-11 01:34:35  master ended after 569s (rc=255) — healthy run, backoff reset
+2026-10-11 01:34:35  reconnecting in 3s
+2026-10-11 01:34:38  opening master connection
+2026-10-11 01:35:23  master died after 45s (rc=255) — failure 1/8
+2026-10-11 01:35:23  reconnecting in 5s
+2026-10-11 01:35:29  opening master connection
+2026-10-11 01:36:14  master died after 45s (rc=255) — failure 2/8
+2026-10-11 01:36:14  reconnecting in 6s
+2026-10-11 01:36:20  opening master connection
+2026-10-11 01:37:06  master died after 46s (rc=255) — failure 3/8
+2026-10-11 01:37:06  reconnecting in 9s
+2026-10-11 01:37:15  opening master connection
+2026-10-11 01:38:00  master died after 45s (rc=255) — failure 4/8
+2026-10-11 01:38:00  reconnecting in 18s
+2026-10-11 01:38:18  opening master connection

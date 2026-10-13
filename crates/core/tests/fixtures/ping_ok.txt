@@ -1,0 +1,9 @@
+PING 100.100.1.10 (100.100.1.10): 56 data bytes
+64 bytes from 100.100.1.10: icmp_seq=0 ttl=64 time=10.012 ms
+
+--- 100.100.1.10 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 10.012/10.012/10.012/0.000 ms
+real 0.05
+user 0.00
+sys 0.00

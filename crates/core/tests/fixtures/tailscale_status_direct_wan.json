@@ -1,0 +1,30 @@
+{
+  "Version": "1.104.1-t7f4efe814-g4939ea2e4",
+  "BackendState": "Running",
+  "Self": {
+    "HostName": "laptop",
+    "TailscaleIPs": [
+      "100.100.1.20"
+    ],
+    "Online": true
+  },
+  "Peer": {
+    "nodekey:0000000000000000000000000000000000000000000000000000000000000000": {
+      "HostName": "deb",
+      "DNSName": "deb.tailnet.example.",
+      "OS": "linux",
+      "TailscaleIPs": [
+        "100.100.1.10",
+        "fd7a:115c:a1e0::d139:476f"
+      ],
+      "Online": true,
+      "Active": true,
+      "Relay": "par",
+      "PeerRelay": "",
+      "CurAddr": "203.0.113.46:38205",
+      "RxBytes": 8062780,
+      "TxBytes": 2934944,
+      "LastHandshake": "2026-10-09T16:09:25.128676+02:00"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+2026-10-11 03:00:00  opening master connection
+2026-10-11 03:00:05  master died after 5s (rc=255) — failure 7/8
+2026-10-11 03:00:05  reconnecting in 61s
+2026-10-11 03:01:06  opening master connection
+2026-10-11 03:01:11  master died after 5s (rc=255) — failure 8/8
+2026-10-11 03:01:11  CIRCUIT OPEN — 8 rapid failures; standing down for 300s
+2026-10-11 03:06:11  CIRCUIT HALF-OPEN — retrying
+2026-10-11 03:06:11  opening master connection

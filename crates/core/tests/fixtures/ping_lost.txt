@@ -1,0 +1,7 @@
+PING 192.0.2.1 (192.0.2.1): 56 data bytes
+
+--- 192.0.2.1 ping statistics ---
+1 packets transmitted, 0 packets received, 100.0% packet loss
+real 1.01
+user 0.00
+sys 0.00

@@ -1,0 +1,20 @@
+    1     0 02-00:48:27 /sbin/launchd
+  538     1 02-00:47:22 /usr/libexec/logd
+  540     1 02-00:47:22 /usr/libexec/smd
+  541     1 02-00:47:22 /usr/libexec/UserEventAgent (System)
+  543     1 02-00:47:22 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/FSEvents.framework/Versions/A/Support/fseventsd
+  544     1 02-00:47:22 /System/Library/PrivateFrameworks/MediaRemote.framework/Support/mediaremoted
+  547     1 02-00:47:22 /usr/sbin/systemstats --daemon
+  551     1 02-00:47:22 /usr/libexec/configd
+  552     1 02-00:47:22 endpointsecurityd
+  553     1 02-00:47:22 /System/Library/CoreServices/powerd.bundle/powerd
+  554     1 02-00:47:22 /usr/libexec/IOMFB_bics_daemon
+  556     1 02-00:47:22 /usr/libexec/amfid
+ 2775     1 02-00:37:47 bash /Users/user/.local/bin/ssh-master fedora
+14698     1 02-00:35:55 /usr/bin/ssh-agent -l
+22474     1       22:30 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) /Users/user/.vscode/extensions/ms-vscode-remote.remote-ssh-0.128.0/out/localServer.js {"serverId":2,"ipcHandlePath":"/var/folders/qb/cw9tcjr93wl6vp99058flyrw0000gn/T/vscode-ssh-askpass-c04e11a68acba1c7b7459e5483a697.sock","sshCommand":"ssh","sshArgs":["-v","-T","-D","62589","-o","ConnectTimeout=15","fedora"],"serverDataFolderName":".vscode-server","dataFilePath":"/Users/user/Library/Application Support/Code/User/globalStorage/ms-vscode-remote.remote-ssh/vscode-ssh-host-37730324-2a59476c9bfcb90b3ddc372c36762471b7dfad1c-0.128.0-es/data.json"}
+22475 22474       22:30 ssh -v -T -D 62589 -o ConnectTimeout=15 fedora
+22489     1       22:27 ssh: /Users/user/.ssh/cm-user@100.100.1.10:22 [mux]     
+22508  2775       22:26 ssh -N -o ControlMaster=yes -o ControlPersist=no -o BatchMode=yes fedora
+31327 41484       00:00 /bin/zsh -c source /Users/user/.zsh-snapshot.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true && { \builtin unalias -- 'unsetenv'; \builtin unset -f -- 'unsetenv'; } >/dev/null 2>&1 || true && eval 'S=/tmp/probes; cd $S\012lsof -n -P -iTCP@100.100.1.10:22 > lsof_tcp_postoutage.out; ps -axo pid=,ppid=,etime=,command= > ps_postoutage.out; ssh -O check fedora 2> check_postoutage.err; tailscale status --json > ts_status_postoutage.json; ls' < /dev/null && pwd -P >| /tmp/cwd
+22340 22145       22:44 ssh -t fedora -- /home/user/.local/bin/dev-session 1
