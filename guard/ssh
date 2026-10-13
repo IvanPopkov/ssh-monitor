@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Shim first on PATH for live runs: only read-only ssh forms pass, the rest is refused and logged.
+REAL_SSH=/usr/bin/ssh
+LOG="${GUARD_LOG:-$(cd "$(dirname "$0")" && pwd)/guard.log}"
+ok=0
+if   [[ $# -eq 3 && "$1" == "-O" && "$2" == "check" && "$3" != -* ]]; then ok=1
+elif [[ $# -eq 2 && "$1" == "-G" && "$2" != -* ]]; then ok=1
+elif [[ $# -eq 1 && "$1" == "-V" ]]; then ok=1
+fi
+if [[ $ok -eq 1 ]]; then exec "$REAL_SSH" "$@"; fi
+printf '%s REFUSED ssh' "$(date '+%F %T')" >>"$LOG"; printf ' %q' "$@" >>"$LOG"; printf '\n' >>"$LOG"
+echo "guard/ssh: refused (only '-O check <host>', '-G <host>', '-V' allowed): ssh $*" >&2
+exit 1
