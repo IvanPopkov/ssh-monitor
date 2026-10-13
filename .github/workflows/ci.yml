@@ -1,0 +1,13 @@
+name: ci
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    # macOS-only tool (nettop, BSD ps/ping).
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+      - run: scripts/check.sh --all
