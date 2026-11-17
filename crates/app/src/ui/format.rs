@@ -50,6 +50,17 @@ pub fn millis_or_na(ms: Option<f64>) -> String {
     ms.map_or_else(|| "n/a".to_string(), millis)
 }
 
+/// Fits a 5-column cell: `100.0%` would need six.
+pub fn percent(p: f64) -> String {
+    let s = format!("{p:.1}%");
+    if s.len() > 5 { format!("{p:.0}%") } else { s }
+}
+
+/// Right-aligned so a value growing a digit never moves what follows it.
+pub fn cell(s: &str, width: usize) -> String {
+    format!("{s:>width$}")
+}
+
 /// Howard Hinnant's civil-from-days, shifted by `offset_secs`.
 pub fn civil(unix_secs: i64, offset_secs: i32) -> (i64, u32, u32, u32, u32, u32) {
     let t = unix_secs + i64::from(offset_secs);
@@ -290,6 +301,21 @@ mod tests {
         assert_eq!(millis(12.4), "12ms");
         assert_eq!(millis(1234.6), "1235ms");
         assert_eq!(millis_or_na(None), "n/a");
+    }
+
+    #[test]
+    fn cells_right_align_and_percent_fits_five() {
+        assert_eq!(cell("6 B/s", 10), "     6 B/s");
+        assert_eq!(cell("382.0 kB/s", 10), "382.0 kB/s");
+        assert_eq!(
+            cell("1235ms", 5),
+            "1235ms",
+            "too wide spills, never truncated"
+        );
+        assert_eq!(percent(0.0), "0.0%");
+        assert_eq!(percent(99.9), "99.9%");
+        assert_eq!(percent(99.96), "100%");
+        assert_eq!(percent(100.0), "100%");
     }
 
     #[test]

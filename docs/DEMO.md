@@ -11,11 +11,13 @@ scripts/live.sh                 # builds, then runs against the live master (hos
 scripts/live.sh --host <other-alias>   # any ssh alias that has a ControlPath configured
 ```
 What you should see within ~3 s (16 rows minimum, more rows = taller charts):
-- **Status bar**: `● UP  fedora  up 4h12m  for 3s` and the clock on the right. `for X` is the time in the
-  current state. Badges appear when they apply: `⚠ STORM` (red), `⚡ BREAKER` (red), `↻ RETRY` (yellow).
+- **Status bar**: `● UP for 3s`, then `fedora  up 4h12m` starting in a fixed column (it never moves as the state or
+  durations change), and on the right any badges, then the clock. `for X` is the time in the current state. Badges
+  appear when they apply: `⚠ STORM` (red), `⚡ BREAKER` (red), `↻ RETRY` (yellow). On a narrow terminal the uptime,
+  then the host, are dropped before a badge or the clock.
   `⚠ STORM` shows only while an `autossh` or a direct (non-mux) `ssh` to the host is running.
 - **rx / tx**: received / sent bytes per second; two charts of Braille columns, 5-minute history (below 30 rows: one mirrored panel, rx up and tx down from a shared zero line, titled `↓ rx … ↑ tx …` — the arrows are the data direction: `↓` download from the host, `↑` upload to it), fixed log axis 100 B/s … 100 MB/s. Titles show the
-  current rate and the 5-min peak. Run something on the host (`ls -R /usr` in a session) and watch rx jump.
+  current rate and the 5-min peak, each right-aligned in a fixed cell: only digits move. Run something on the host (`ls -R /usr` in a session) and watch rx jump.
 - **latency · direct · LAN**: now/jitter/loss and min/avg/max over 5 minutes, plus a sparkline.
 - **clients (N)**: `#1 … #4` (dev-sessions), `vscode`, others by their remote command, each with its age;
   direct clients in red with `⚠`; `+k more` when they do not fit.
@@ -51,7 +53,7 @@ A recorded tape replays in the test layers by time (`select_entry` in `crates/te
 | clients `+…` / `−…` | `ssh fedora` in a new terminal, then exit | `clients +ssh`, then `clients −ssh`; count changes |
 | direct client `⚠` + storm (b) | `ssh -o ControlMaster=no -o ControlPath=none fedora` | red `⚠ ssh` in clients, `storm: non-mux ssh pid …`, `⚠ STORM`; on exit `storm cleared after …` |
 | storm (a) | start `autossh -M 0 -N fedora` (if installed), stop it | `storm: autossh present (pid …)` / cleared |
-| DOWN → restart | `ssh -O exit fedora` — **warning: this also closes every session multiplexed through the master (#1–#4, VS Code)**; the supervisor restarts it | `○ DOWN  down 3s (was up 4h12m)`, `master down after Ns (rc=N)` (merged from the supervisor log), the supervisor's `reconnecting in Ns` line, then `master restarted (pid …)`; rx/tx charts show a gap. Supervisor lines written before the 2026-10-13 supervisor fix; re-check them on the next real restart |
+| DOWN → restart | `ssh -O exit fedora` — **warning: this also closes every session multiplexed through the master (#1–#4, VS Code)**; the supervisor restarts it | `○ DOWN for 3s … fedora  was up 4h12m`, `master down after Ns (rc=N)` (merged from the supervisor log), the supervisor's `reconnecting in Ns` line, then `master restarted (pid …)`; rx/tx charts show a gap. Supervisor lines written before the 2026-10-13 supervisor fix; re-check them on the next real restart |
 | DEGRADED (loss) | turn Wi-Fi/Tailscale off for ~15 s | `◐ DEGRADED (loss)`, `degraded: 3 lost pings`, blanks in the sparkline, then `recovered after 20s` |
 | path changed | switch between LAN and a WAN/DERP path (e.g. tethering) | title `direct · WAN` / `DERP par`; `path changed: …` only for direct ↔ DERP |
 | system resumed | close the lid for a minute | `system resumed after 1m02s` |
@@ -65,7 +67,7 @@ Dump the last frame of each test:
 SSHMON_DUMP_FRAMES=1 cargo test -p ssh-monitor --test l1_tui -- --nocapture --test-threads 1
 ```
 You will see, among others:
-- `down_view_shows_no_master_rogues_and_a_gap_in_the_charts` — `○ DOWN … (was up 10s)`, `clients · no master`, a red `⚠ ssh`, the chart history ending in a gap;
+- `down_view_shows_no_master_rogues_and_a_gap_in_the_charts` — `○ DOWN for … fedora  was up 10s`, `clients · no master`, a red `⚠ ssh`, the chart history ending in a gap;
 - `scenario_timeline_up_loss_degraded_recovered_down_loop_up` — a 120×40 frame after
   UP → lost pings → DEGRADED → recovered → DOWN → 3-attempt reconnect loop (`↻ RETRY`) → `CIRCUIT OPEN`
   (`⚡ BREAKER`) → new master, with the event log newest-first;

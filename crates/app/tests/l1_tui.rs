@@ -271,18 +271,26 @@ async fn snapshots_at_64x16_90x16_90x29_90x30_and_120x40() {
         assert!(status.contains("for 12s"), "time in state: {status}");
         assert!(status.trim_end().ends_with("00:00:12"), "clock: {status}");
         let text = frame.text();
+        let (rx, tx) = if size.0 >= 73 {
+            (
+                "rx   1.0 kB/s · peak   1.0 kB/s",
+                "tx    500 B/s · peak    500 B/s",
+            )
+        } else {
+            ("rx   1.0 kB/s pk   1.0 kB/s", "tx    500 B/s pk    500 B/s")
+        };
         for needle in [
-            "rx 1.0 kB/s · peak 1.0 kB/s",
-            "tx 500 B/s · peak 500 B/s",
+            rx,
+            tx,
             "── latency · direct · LAN",
             "clients (2)",
             "── events",
             "master up (pid 1000)",
             "#1 12s",
             "⚠ vscode 12s",
-            "now 10ms",
-            "loss 0.0%",
-            "max 10ms",
+            "now  10ms",
+            "loss  0.0%",
+            "max  10ms",
         ] {
             assert!(text.contains(needle), "{size:?} lacks {needle:?}:\n{text}");
         }
@@ -297,7 +305,7 @@ async fn snapshots_at_64x16_90x16_90x29_90x30_and_120x40() {
             Color::DarkGray,
             "dim client event"
         );
-        let lat_row = frame.row_of("max 10ms");
+        let lat_row = frame.row_of("max  10ms");
         assert!(
             frame.rows[lat_row].contains("ms  "),
             "{}",
@@ -374,16 +382,16 @@ async fn down_view_shows_no_master_rogues_and_a_gap_in_the_charts() {
     assert_eq!(out.monitor.state(), State::Down);
     assert!(frame.rows[0].contains("○ DOWN"), "{text}");
     assert_eq!(frame.color_of("○ DOWN"), Color::Red);
-    assert!(frame.rows[0].contains("down "), "{text}");
-    assert!(frame.rows[0].contains("(was up "), "{text}");
+    assert!(frame.rows[0].contains("○ DOWN for "), "{text}");
+    assert!(frame.rows[0].contains("was up "), "{text}");
     assert!(text.contains("clients · no master"), "{text}");
     assert!(
         text.contains("⚠ ssh"),
         "rogue ssh listed while DOWN: {text}"
     );
-    assert!(text.contains("rx n/a"), "{text}");
+    assert!(text.contains("rx        n/a"), "{text}");
     assert!(
-        text.contains("now 10ms"),
+        text.contains("now  10ms"),
         "keeps pinging while DOWN: {text}"
     );
     assert_eq!(frame.color_of("master down"), Color::Red);
@@ -484,7 +492,7 @@ async fn client_overflow_keeps_direct_clients_visible() {
     assert!(text.contains("⚠ ssh 1h01m"), "{text}");
     assert!(text.contains(" more"), "+k more on overflow:\n{text}");
     assert_eq!(frame.color_of("⚠ vscode"), Color::Red);
-    let spark_row = frame.row_of("max 10ms") + 1;
+    let spark_row = frame.row_of("max  10ms") + 1;
     assert!(
         frame.rows[spark_row].contains("  "),
         "{}",
@@ -562,7 +570,7 @@ async fn scenario_timeline_up_loss_degraded_recovered_down_loop_up() {
         "{}",
         degraded.text()
     );
-    let spark = degraded.row_of("max 10ms") + 1;
+    let spark = degraded.row_of("max  10ms") + 1;
     assert!(
         degraded.rows[spark].trim_end().ends_with(' ') || degraded.rows[spark].contains("█ "),
         "lost pings are blanks: {:?}",
@@ -570,8 +578,16 @@ async fn scenario_timeline_up_loss_degraded_recovered_down_loop_up() {
     );
     let down = out.frame_with("↻ RETRY");
     assert!(down.rows[0].contains("○ DOWN"), "{}", down.rows[0]);
-    assert!(down.rows[0].contains("(was up "), "{}", down.rows[0]);
+    assert!(down.rows[0].contains("was up "), "{}", down.rows[0]);
     assert!(down.text().contains("clients · no master"));
+    let host_col = |f: &Frame| {
+        f.rows[0]
+            .find("fedora")
+            .map(|i| f.rows[0][..i].chars().count())
+    };
+    for f in [degraded, down, out.last()] {
+        assert_eq!(host_col(f), Some(31), "{}", f.rows[0]);
+    }
     let last = out.last();
     let text = last.text();
     let order = [
@@ -608,7 +624,7 @@ async fn missing_supervisor_log_and_failing_probes_show_na() {
     let frame = out.last();
     let text = frame.text();
     assert!(frame.rows[0].contains("log n/a"), "{}", frame.rows[0]);
-    assert!(text.contains("rx n/a · peak n/a"), "{text}");
+    assert!(text.contains("rx        n/a · peak        n/a"), "{text}");
     assert!(text.contains("probe failed: nettop"), "{text}");
     assert!(text.contains("probe failed: supervisor log"), "{text}");
     let scenario = Scenario::new().then_at(s(5), Phase::default().with_status_hang(true));
@@ -683,7 +699,7 @@ async fn sparkline_blanks_only_lost_pings() {
         .filter(|s| s.rtt_ms.is_none())
         .count();
     assert!(samples >= 8 && lost >= 1, "{samples} samples, {lost} lost");
-    let spark: Vec<char> = frame.rows[frame.row_of("max 30ms") + 1]
+    let spark: Vec<char> = frame.rows[frame.row_of("max  30ms") + 1]
         .chars()
         .take(samples)
         .collect();
@@ -693,6 +709,19 @@ async fn sparkline_blanks_only_lost_pings() {
         "only lost pings are blank: {spark:?}"
     );
     assert!(spark.contains(&'▁') && spark.contains(&'█'), "{spark:?}");
+    // 3.0ms, 30ms and lost replies change every value's width, never a label's column.
+    let cols = |f: &Frame| {
+        let (l1, l2) = (&f.rows[f.row_of("jitter")], &f.rows[f.row_of("avg")]);
+        let at = |row: &str, needle| row.find(needle).map(|i| row[..i].chars().count());
+        [
+            at(l1, "jitter"),
+            at(l1, "loss"),
+            at(l2, "avg"),
+            at(l2, "max"),
+        ]
+    };
+    let first = cols(&out.frames[0]);
+    assert!(out.frames.iter().all(|f| cols(f) == first), "{first:?}");
 }
 
 /// One dev-session client; `ps` starts failing at 5 s.

@@ -6,24 +6,25 @@ clients multiplexed through it, and the `ssh-master` supervisor log — and it n
 connection: the only ssh commands it ever runs are `ssh -G <host>` and `ssh -O check <host>`.
 
 ```
-● UP  ⚠ STORM  fedora  up 1h01m  for 1h01m              01:01:40
-── ↓ rx 1.0 kB/s · peak 1.0 kB/s   ↑ tx 500 B/s · peak 500 B/s ─
+● UP for 1h01m                 fedora          ⚠ STORM  01:01:40
+── ↓ rx   1.0 kB/s pk   1.0 kB/s  ↑ tx    500 B/s pk    500 B/s
 
 ⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤
 ⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛
 
 ── latency · direct · LAN ───────── ── clients (8) ─────────────
-now 10ms  jitter 0.0ms  loss 0.0%   ⚠ vscode 1h01m  +5 more
-min 10ms  avg 10ms  max 10ms        ⚠ ssh 1h01m
+now  10ms  jitter 0.0ms  loss  0.0% ⚠ vscode 1h01m  +5 more
+min  10ms  avg  10ms  max  10ms     ⚠ ssh 1h01m
 ███████████████████████████████████ #1 1h01m
 ── events ──────────────────────────────────────────────────────
+00:00:00 clients +#1 +#2 +#3 +#4 +#5 +#6 +vscode +ssh
 00:00:00 storm: non-mux ssh pid 2011 (ssh)
 00:00:00 storm: non-mux ssh pid 2010 (ssh)
-00:00:00 clients +#1 +#2 +#3 +#4 +#5 +#6 +vscode +ssh
 00:00:00 master up (pid 1000)
 ```
 (a 64×16 frame rendered by the test suite against fake tools: below 30 rows rx grows up and tx
-grows down from a shared zero line; `↓`/`↑` = data direction)
+grows down from a shared zero line; `↓`/`↑` = data direction. At this width the master uptime is the
+first field dropped; wider, it follows the host: `fedora  up 1h01m`)
 
 Spec: [docs/SPEC.md](docs/SPEC.md). Design: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 How to see each feature: [docs/DEMO.md](docs/DEMO.md).
@@ -53,14 +54,15 @@ ssh-monitor [--host <alias>] [--interval <secs>] [--log <csv>] [--once] [--recor
 | `--record <dir>` | save every probe command and its output to `<dir>/tape.jsonl` (replayable by the tests) |
 
 Keys: `q` quit · `p` freeze the display (sampling, events and CSV continue) · `c` clear the on-screen log.
-Minimum terminal size 64×16; extra rows go to the charts and the event log. Below 30 rows rx and tx share one mirrored panel (rx up, tx down).
+Values never shift what follows them: the host starts in a fixed column, badges and the clock are right-aligned, and
+rates / latencies sit in fixed-width cells. Minimum terminal size 64×16; extra rows go to the charts and the event log. Below 30 rows rx and tx share one mirrored panel (rx up, tx down).
 
 ## How each metric is measured
 
 | What | Command | Rule |
 |---|---|---|
 | **State** `● UP` / `◐ DEGRADED` / `○ DOWN` | `ssh -O check <host>` every 2 ticks | DOWN = no master. DEGRADED = master alive and any of: ≥3 consecutive lost pings · 5 s median RTT > max(3× baseline, baseline + 100 ms) · no bytes received for > 2× `ServerAliveInterval` + 5 s. Back to UP after 5 s of clean pings. Before the first answer the state is `n/a` |
-| **Master uptime** | `ps -o etime= -p <pid>` | `up X`; after a drop `down X (was up Y)` |
+| **Master uptime** | `ps -o etime= -p <pid>` | `up X` after the host; after a drop `was up Y` (the time in the state, `for X`, sits next to the state) |
 | **rx / tx** charts | `nettop -p <pid> -P -L 1 -x -J bytes_in,bytes_out` every tick | counter differences over monotonic time, drawn as Braille columns covering the span each difference measured; 5-min history on a fixed log axis 100 B/s … 100 MB/s; gaps while DOWN or when nettop fails or has no row |
 | **Latency** now · min/avg/max · jitter · loss | `ping -c 1 -t 1 <ip>` every tick (also while DOWN) | all over the last 5 min; jitter = mean \|ΔRTT\|; a timed-out ping is lost. Baseline = 5-min median of pings taken while UP (needs 10), reset on path change |
 | **Path** in the latency title | `tailscale status --json` every 10 ticks, peer matched by IP | `direct · LAN` / `direct · WAN` (`CurAddr` set, private or not) / `DERP <region>` / `relay <via>` (Tailscale peer relay) / `n/a` (peer offline or probe failed) |

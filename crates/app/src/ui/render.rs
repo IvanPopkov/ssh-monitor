@@ -141,8 +141,18 @@ pub fn badge_span(badge: Badge) -> Span<'static> {
     Span::styled(format!("{glyph} {}", badge.name()), bold(color))
 }
 
-/// In priority order (first = never dropped).
-pub fn status_fields(view: &View<'_>) -> Vec<Span<'static>> {
+/// Widest slot content: `◐ DEGRADED (stall) for 23h59m`.
+pub const STATE_SLOT: usize = 29;
+
+pub struct StatusParts {
+    pub slot: Vec<Span<'static>>,
+    pub host: Span<'static>,
+    pub life: Option<Span<'static>>,
+    pub log: Option<Span<'static>>,
+    pub badges: Vec<Span<'static>>,
+}
+
+pub fn status_parts(view: &View<'_>) -> StatusParts {
     let m = view.monitor;
     let now = view.now;
     let state = m.known_state();
@@ -160,77 +170,105 @@ pub fn status_fields(view: &View<'_>) -> Vec<Span<'static>> {
         Some(State::Down) => ("○", "DOWN".to_string(), Color::Red),
         None => ("?", "n/a".to_string(), Color::DarkGray),
     };
-    let mut fields = vec![Span::styled(format!("{light} {text}"), bold(color))];
-    fields.extend(m.badges().into_iter().map(badge_span));
-    fields.push(Span::styled(m.cfg.host_alias.clone(), bold(Color::White)));
+    let dim = Style::default().fg(Color::DarkGray);
     let since = now.mono.saturating_sub(m.health.since.mono);
-    match (state, &m.health.master) {
-        (Some(State::Down), _) => {
-            fields.push(Span::raw(format!("down {}", format::duration(since))));
-            if let Some(was) = m.health.was_up_for {
-                fields.push(Span::raw(format!("(was up {})", format::duration(was))));
-            }
-        }
-        (Some(_), Some(master)) => {
-            fields.push(Span::raw(format!(
-                "up {}",
-                master.uptime_at(now).map_or("n/a".into(), format::duration)
-            )));
-            fields.push(Span::styled(
-                format!("for {}", format::duration(since)),
-                Style::default().fg(Color::DarkGray),
-            ));
-        }
-        _ => {}
-    }
-    if !m.supervisor.available {
-        fields.push(Span::styled(
-            "log n/a",
-            Style::default().fg(Color::DarkGray),
+    let mut slot = vec![Span::styled(format!("{light} {text}"), bold(color))];
+    if state.is_some() {
+        slot.push(Span::styled(
+            format!(" for {}", format::duration(since)),
+            dim,
         ));
     }
-    fields
+    let life = match (state, &m.health.master) {
+        (Some(State::Down), _) => m
+            .health
+            .was_up_for
+            .map(|was| Span::raw(format!("was up {}", format::duration(was)))),
+        (Some(_), Some(master)) => Some(Span::raw(format!(
+            "up {}",
+            master.uptime_at(now).map_or("n/a".into(), format::duration)
+        ))),
+        _ => None,
+    };
+    StatusParts {
+        slot,
+        host: Span::styled(m.cfg.host_alias.clone(), bold(Color::White)),
+        life,
+        log: (!m.supervisor.available).then(|| Span::styled("log n/a", dim)),
+        badges: m.badges().into_iter().map(badge_span).collect(),
+    }
+}
+
+/// Keeps the most parts that fit, dropping log, life, host, clock, then badges. The slot is
+/// padded only while the host follows it.
+pub fn status_line(p: &StatusParts, clock: &[Span<'static>], width: usize) -> Line<'static> {
+    let width_of = |spans: &[Span]| spans.iter().map(Span::width).sum::<usize>();
+    let join = |groups: Vec<Vec<Span<'static>>>| {
+        let mut out = Vec::new();
+        for g in groups.into_iter().filter(|g| !g.is_empty()) {
+            if !out.is_empty() {
+                out.push(Span::raw("  "));
+            }
+            out.extend(g);
+        }
+        out
+    };
+    for keep in (1..=5).rev() {
+        let with_host = keep >= 3;
+        let mut slot = p.slot.clone();
+        if with_host {
+            slot.push(Span::raw(
+                " ".repeat(STATE_SLOT.saturating_sub(width_of(&slot))),
+            ));
+        }
+        let mut left = vec![slot];
+        if with_host {
+            left.push(vec![p.host.clone()]);
+        }
+        if keep >= 4 {
+            left.push(p.life.iter().cloned().collect());
+        }
+        if keep >= 5 {
+            left.push(p.log.iter().cloned().collect());
+        }
+        let mut right: Vec<Vec<Span<'static>>> = Vec::new();
+        if keep >= 1 {
+            right.extend(p.badges.iter().map(|b| vec![b.clone()]));
+        }
+        if keep >= 2 {
+            right.push(clock.to_vec());
+        }
+        let (left, right) = (join(left), join(right));
+        let (lw, rw) = (width_of(&left), width_of(&right));
+        let gap = usize::from(rw > 0);
+        if lw + gap + rw <= width {
+            let mut spans = left;
+            spans.push(Span::raw(" ".repeat(width.saturating_sub(lw + rw))));
+            spans.extend(right);
+            return Line::from(spans);
+        }
+    }
+    Line::from(p.slot.clone())
 }
 
 fn status_bar(frame: &mut Frame, area: Rect, view: &View<'_>) {
-    let mut fields = status_fields(view);
-    let clock = format::clock(view.now.wall, view.utc_offset_secs);
-    let mut right = Vec::new();
+    let mut clock = Vec::new();
     if view.paused {
-        right.push(Span::styled(
+        clock.push(Span::styled(
             " PAUSED ",
             Style::default()
                 .fg(Color::Black)
                 .bg(Color::Yellow)
                 .add_modifier(Modifier::BOLD),
         ));
-        right.push(Span::raw(" "));
+        clock.push(Span::raw(" "));
     }
-    right.push(Span::styled(clock, Style::default().fg(Color::DarkGray)));
-    let right = Line::from(right);
-    let right_w = right.width() as u16;
-    let avail = area.width.saturating_sub(right_w + 1) as usize;
-    // Drop the lowest-priority fields until the left side fits (the state light always stays).
-    let width_of =
-        |f: &[Span]| f.iter().map(|s| s.width()).sum::<usize>() + f.len().saturating_sub(1) * 2;
-    while fields.len() > 1 && width_of(&fields) > avail {
-        fields.pop();
-    }
-    let mut spans = Vec::new();
-    for (i, f) in fields.into_iter().enumerate() {
-        if i > 0 {
-            spans.push(Span::raw("  "));
-        }
-        spans.push(f);
-    }
-    frame.render_widget(
-        Paragraph::new(Line::from(spans)),
-        Rect::new(area.x, area.y, area.width.saturating_sub(right_w + 1), 1),
-    );
-    if area.width > right_w {
-        let right_area = Rect::new(area.x + area.width - right_w, area.y, right_w, 1);
-        frame.render_widget(Paragraph::new(right), right_area);
-    }
+    clock.push(Span::styled(
+        format::clock(view.now.wall, view.utc_offset_secs),
+        Style::default().fg(Color::DarkGray),
+    ));
+    let line = status_line(&status_parts(view), &clock, usize::from(area.width));
+    frame.render_widget(Paragraph::new(line), area);
 }
 
 /// x = seconds ago, height = log10(bps) above the floor. Each rate fills back to the previous
@@ -293,6 +331,9 @@ fn chart(
     frame.render_widget(widget, parts[1]);
 }
 
+/// `999.9 kB/s`, the widest rate below 1000 GB/s.
+const RATE_CELL: usize = 10;
+
 pub struct RateTitle {
     pub label: &'static str,
     pub current: Option<f64>,
@@ -304,7 +345,7 @@ impl RateTitle {
         format!(
             "{} · peak {}",
             self.current_only(),
-            format::rate_or_na(self.peak)
+            format::cell(&format::rate_or_na(self.peak), RATE_CELL)
         )
     }
 
@@ -312,16 +353,20 @@ impl RateTitle {
         format!(
             "{} pk {}",
             self.current_only(),
-            format::rate_or_na(self.peak)
+            format::cell(&format::rate_or_na(self.peak), RATE_CELL)
         )
     }
 
     pub fn current_only(&self) -> String {
-        format!("{} {}", self.label, format::rate_or_na(self.current))
+        format!(
+            "{} {}",
+            self.label,
+            format::cell(&format::rate_or_na(self.current), RATE_CELL)
+        )
     }
 }
 
-/// Full, then compact (fits 64 columns below 1000 GB/s), then the rates alone.
+/// Full (73 columns), then compact (exactly 64), then the rates alone.
 pub fn merged_titles(rx: &RateTitle, tx: &RateTitle, width: u16) -> (String, String, &'static str) {
     let fits = |rx: &str, tx: &str, gap: &str| {
         format!("── ↓ {rx}{gap}↑ {tx} ").chars().count() <= usize::from(width)
@@ -393,20 +438,19 @@ fn mirrored_chart(
 /// Sized to fit 35 columns (the 64×16 minimum).
 pub fn latency_lines(m: &Monitor) -> (String, String) {
     let st = m.latency.stats();
-    let loss = st
-        .loss_pct
-        .map_or("n/a".to_string(), |p| format!("{p:.1}%"));
+    let ms = |v: Option<f64>| format::cell(&format::millis_or_na(v), 5);
+    let loss = format::cell(&st.loss_pct.map_or("n/a".to_string(), format::percent), 5);
     (
         format!(
             "now {}  jitter {}  loss {loss}",
-            format::millis_or_na(st.now_ms),
-            format::millis_or_na(st.jitter_ms)
+            ms(st.now_ms),
+            ms(st.jitter_ms)
         ),
         format!(
             "min {}  avg {}  max {}",
-            format::millis_or_na(st.min_ms),
-            format::millis_or_na(st.avg_ms),
-            format::millis_or_na(st.max_ms)
+            ms(st.min_ms),
+            ms(st.avg_ms),
+            ms(st.max_ms)
         ),
     )
 }
@@ -738,7 +782,97 @@ mod tests {
             current: None,
             peak: None,
         };
-        assert_eq!(na.full(), "rx n/a · peak n/a");
+        assert_eq!(na.full(), "rx        n/a · peak        n/a");
+    }
+
+    #[test]
+    fn rate_titles_keep_their_columns_as_values_change() {
+        let title = |label, current, peak| RateTitle {
+            label,
+            current,
+            peak,
+        };
+        let head = |rx: Option<f64>, width| {
+            let (r, t, gap) = merged_titles(
+                &title("rx", rx, Some(2_800.0)),
+                &title("tx", Some(66.0), Some(382_000.0)),
+                width,
+            );
+            format!("── ↓ {r}{gap}↑ {t} ")
+        };
+        for width in [90, 64] {
+            let marks = |h: String| {
+                let at = |needle: &str| h.find(needle).map(|i| h[..i].chars().count());
+                (at(" p"), at("↑ tx"), h.chars().count())
+            };
+            let small = marks(head(Some(6.0), width));
+            assert_eq!(small, marks(head(Some(382_000.0), width)), "{width}");
+            assert_eq!(small, marks(head(None, width)), "{width}");
+        }
+        assert_eq!(head(None, 73).chars().count(), 73);
+        assert!(head(None, 73).contains(" · peak "));
+        assert_eq!(head(None, 72).chars().count(), 64);
+        assert!(head(None, 72).contains(" pk "));
+    }
+
+    fn parts(slot: &str, badges: &[Badge]) -> StatusParts {
+        StatusParts {
+            slot: vec![Span::raw(slot.to_string())],
+            host: Span::raw("fedora"),
+            life: Some(Span::raw("up 21h43m")),
+            log: None,
+            badges: badges.iter().copied().map(badge_span).collect(),
+        }
+    }
+
+    fn text(line: &Line) -> String {
+        line.spans.iter().map(|s| s.content.as_ref()).collect()
+    }
+
+    fn col_of(line: &str, needle: &str) -> Option<usize> {
+        line.find(needle).map(|i| line[..i].chars().count())
+    }
+
+    #[test]
+    fn host_keeps_its_column_whatever_the_state() {
+        let clock = [Span::raw("19:56:59")];
+        for slot in [
+            "● UP for 5s",
+            "● UP for 21h43m",
+            "◐ DEGRADED (stall) for 23h59m",
+            "○ DOWN for 3s",
+            "? n/a",
+        ] {
+            let line = text(&status_line(&parts(slot, &[Badge::Storm]), &clock, 90));
+            assert!(line.starts_with(slot), "{line}");
+            assert_eq!(col_of(&line, "fedora"), Some(STATE_SLOT + 2), "{line}");
+            assert_eq!(col_of(&line, "up 21h43m"), Some(STATE_SLOT + 10), "{line}");
+            assert!(line.ends_with("⚠ STORM  19:56:59"), "{line}");
+            assert_eq!(line.chars().count(), 90, "{line}");
+        }
+    }
+
+    #[test]
+    fn narrow_status_drops_uptime_then_host_before_badges_and_clock() {
+        let clock = [Span::raw("19:56:59")];
+        let line = text(&status_line(
+            &parts("● UP for 5s", &[Badge::Storm]),
+            &clock,
+            64,
+        ));
+        assert_eq!(col_of(&line, "fedora"), Some(STATE_SLOT + 2), "{line}");
+        assert!(!line.contains("up 21h43m"), "{line}");
+        assert!(line.ends_with("⚠ STORM  19:56:59"), "{line}");
+        let all = [Badge::Storm, Badge::Breaker, Badge::Retry];
+        let line = text(&status_line(&parts("○ DOWN for 41s", &all), &clock, 64));
+        assert!(!line.contains("fedora"), "{line}");
+        assert!(
+            line.starts_with("○ DOWN for 41s ")
+                && line.ends_with("⚠ STORM  ⚡ BREAKER  ↻ RETRY  19:56:59"),
+            "the slot loses its padding first: {line}"
+        );
+        let line = text(&status_line(&parts("○ DOWN for 41s", &all), &clock, 20));
+        assert_eq!(line, "○ DOWN for 41s");
     }
 
     #[test]

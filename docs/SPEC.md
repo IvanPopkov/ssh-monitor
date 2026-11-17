@@ -19,7 +19,11 @@
 Baseline = 5-min median RTT of samples taken while UP. Slow rule and spike events disabled until 10 samples. Baseline resets on path change.
 
 ## F1 · Status bar (1 row)
-`●` light + state text · badges · host · master uptime (or `down X (was up Y)`) · time in current state · `PAUSED` · clock. No PID.
+Left: `●` light + state text + `for X` (time in current state) in a fixed 29-column slot (the widest case,
+`◐ DEGRADED (stall) for 23h59m`), so the host always starts in the same column · host · master uptime `up X` (while
+DOWN: `was up X`) · `log n/a` when the supervisor log is missing. Right-aligned: badges · `PAUSED` · clock. No PID.
+Too narrow → drop `log n/a`, then the uptime, then the host (the slot loses its padding), then `PAUSED` + clock,
+then badges; the slot always stays.
 Uptime comes from `ps -o etime`; while that probe fails for the same PID it keeps counting from the last reading.
 
 | Badge | Shown while |
@@ -32,11 +36,13 @@ Uptime comes from `ps -o etime`; while that probe fails for the same PID it keep
 - Two stacked charts of Braille columns (bottom → value): rx (received from the host), then tx (sent to it). 5-min history.
 - Below 30 rows: one mirrored panel instead: rx columns grow up and tx columns grow down from a shared zero line. Title arrows show the data direction: `↓ rx` (download), `↑ tx` (upload).
 - Fixed log Y axis, 100 B/s → 100 MB/s.
-- Title per chart: current value + 5-min peak. In the merged panel, when that is too wide: `↓ rx 1.2 kB/s pk 3.4 kB/s  ↑ tx …`, then current values only.
+- Title per chart: current value + 5-min peak. In the merged panel, when that is too wide: `↓ rx   1.2 kB/s pk   3.4 kB/s  ↑ tx …`, then current values only.
+- Values right-aligned in fixed 10-column cells, so only digits move and the title form depends on the terminal width alone.
 - Gaps while DOWN.
 
 ## F3 · Latency
 - now · min/avg/max · jitter (mean |ΔRTT|) · loss % — all over 5 min.
+- Values right-aligned in fixed 5-column cells; total loss shows as `100%`.
 - Sparkline; lost pings shown as gaps. Every reply is at least `▁`, so a fast reply is never mistaken for a lost one.
 - Path in panel title: `direct · LAN` / `direct · WAN` / `DERP <region>` / `relay <via>` / `n/a`.
   - direct ⇔ Tailscale `CurAddr` non-empty; LAN ⇔ `CurAddr` in a private range.
